@@ -1,0 +1,2 @@
+# Anything in node_modules is a node module, should be installed via npm install
+/node_modules/*
