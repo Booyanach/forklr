@@ -1,6 +1,5 @@
 var mongoose = require('mongoose'),
     RecipeSchema = new mongoose.Schema({
-        id: mongoose.Schema.Types.ObjectId,
         family: {
             type: String,
             default: ''
