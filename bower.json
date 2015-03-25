@@ -1,0 +1,21 @@
+{
+  "name": "forklr",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Booyanach/forklr",
+  "authors": [
+    "Booyanach"
+  ],
+  "description": "something something forky",
+  "main": "server.js",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,2 +1,5 @@
 # Anything in node_modules is a node module, should be installed via npm install
 /node_modules/*
+
+# Anything in bower_components is a bower component, should be installed via bower install
+/bower_components/*
