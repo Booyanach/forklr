@@ -11,13 +11,25 @@ var express = require('express'),
 
 mongoose.connect('mongodb://localhost:27017/forklr');
 
-app.use(express.static(__dirname, '/'));
+app.use(express.static(__dirname, 'www/'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
 app.use(passport.initialize());
+
+app.get('/users', function (req, res) {
+    userController.getUsers(req, res);
+});
+
+app.get('/user/:user_id', function (req, res) {
+    userController.postUsers(req, res);
+});
+
+app.post('/user/new', function (req, res) {
+    userController.postUsers(req, res);
+});
 
 router.route('recipes')
     .get(recipeController.getRecipes);
@@ -30,8 +42,8 @@ router.route('recipe/:recipe_id')
 
 router.route('users')
     .post(userController.postUsers)
-    .get(authController.isAuthenticated, userController.getUsers);
+    .get(userController.getUsers);
 
-app.listen(8097);
+app.listen(8087);
 
 console.log('Express listening on port 80');

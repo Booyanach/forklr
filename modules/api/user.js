@@ -10,6 +10,8 @@ exports.postUsers = function (req, res) {
         if (err) res.json({message: 'error creating user.', error: err, status: 'ERROR'});
         res.json({mssage: 'user has been created', status: 'OK'});
     });
+
+    console.log(user);
 };
 
 exports.getUsers = function (req, res) {
