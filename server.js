@@ -24,7 +24,7 @@ app.route('/recipes')
 
 app.route('recipe/:recipe_id')
     .post(authController.isAuthenticated, recipeController.postRecipe)
-    .get(authController.isAuthenticated, recipeController.getRecipe);
+    .get(authController.isAuthenticated, recipeController.getRecipe)
     .delete(authController.isAuthenticated, recipeController.deleteRecipe);
 
 app.route('/users')
