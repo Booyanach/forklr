@@ -29,3 +29,10 @@ exports.getRecipes = function (req, res) {
         res.json({data: recipes, status: 'OK'});
     });
 };
+
+exports.deleteRecipe = function (req, res) {
+    Recipe.findById(req.params.recipe_id).remove(function (err, recipe) {
+        if (err) res.json({message: 'failed to delete recipe!', status: 'ERROR'});
+        res.json({message: 'recipe deleted successfuly!', status: 'OK'});
+    })
+}

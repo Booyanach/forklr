@@ -11,7 +11,7 @@ var express = require('express'),
 
 mongoose.connect('mongodb://localhost:27017/forklr');
 
-app.use(express.static(__dirname, 'www/'));
+app.use(express.static(__dirname + '/www', '/'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -19,30 +19,20 @@ app.use(bodyParser.urlencoded({
 
 app.use(passport.initialize());
 
-app.get('/users', function (req, res) {
-    userController.getUsers(req, res);
-});
-
-app.get('/user/:user_id', function (req, res) {
-    userController.postUsers(req, res);
-});
-
-app.post('/user/new', function (req, res) {
-    userController.postUsers(req, res);
-});
-
-router.route('recipes')
+app.route('/recipes')
     .get(recipeController.getRecipes);
 
-router.route('recipe/:recipe_id')
-    // .post(authController.isAuthenticated, recipeController.postRecipe) //substitute the one bellow for this one
-    .post(recipeController.postRecipe)
+app.route('recipe/:recipe_id')
+    .post(authController.isAuthenticated, recipeController.postRecipe)
     .get(authController.isAuthenticated, recipeController.getRecipe);
-    // .delete(authController.isAuthenticated, recipeController.deleteRecipes);
+    .delete(authController.isAuthenticated, recipeController.deleteRecipe);
 
-router.route('users')
+app.route('/users')
     .post(userController.postUsers)
     .get(userController.getUsers);
+
+    app.route('/user/:user_id')
+        .get(userController.getUser);
 
 app.listen(8087);
 

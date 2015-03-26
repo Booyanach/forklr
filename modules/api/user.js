@@ -20,3 +20,10 @@ exports.getUsers = function (req, res) {
         res.json({data: users, status: 'OK'});
     });
 };
+
+exports.getUser = function (req, res) {
+    User.findById(req.params.user_id, function (err, user) {
+      if (err) res.json({message: 'failed to find user!', status: 'ERROR'});
+      res.json({data: user, status: 'OK'});
+    })
+}
