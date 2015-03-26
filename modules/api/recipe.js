@@ -1,4 +1,5 @@
-var Recipe = require('../models/recipe');
+var Recipe = require('../models/recipe'),
+    handler = require('../jsonJandler');
 
 exports.postRecipe = function (req, res) {
     var recipe = new Recipe({
@@ -11,28 +12,28 @@ exports.postRecipe = function (req, res) {
     });
 
     recipe.save(function (err) {
-        if (err) res.json({message: 'error creating recipe.', error: err, status: 'ERROR'});
-        res.json({mssage: 'recipe has been created', status: 'OK'});
+        if (err) res.json(handler.onerror('error creating recipe.',err));
+        res.json(handler.onok('recipe has been created'));
     });
 };
 
 exports.getRecipe = function (req, res) {
     Recipe.findById(req.params.recipe_id, function (err, recipe) {
-        if (err) res.json({message: 'failed to find recipe!', status: 'ERROR'});
-        res.json({data: recipe, status: 'OK'});
+        if (err) res.json(handler.onerror('failed to find recipe!', err));
+        res.json(handler.onreturn(recipe));
     });
 };
 
 exports.getRecipes = function (req, res) {
     Recipe.find(function (err, recipes) {
-        if (err) res.json({message: 'failed to find recipe!', status: 'ERROR'});
-        res.json({data: recipes, status: 'OK'});
+        if (err) res.json(handler.onerror('failed to find recipes!', err));
+        res.json(handler.onreturn(recipes));
     });
 };
 
 exports.deleteRecipe = function (req, res) {
-    Recipe.findById(req.params.recipe_id).remove(function (err, recipe) {
-        if (err) res.json({message: 'failed to delete recipe!', status: 'ERROR'});
-        res.json({message: 'recipe deleted successfuly!', status: 'OK'});
-    })
-}
+    Recipe.findByIdAndRemove(req.params.recipe_id, function (err, recipe) {
+        if (err) res.json(handler.onerror('failed to delete recipe!', err));
+        res.json(handler.onok('recipe deleted successfuly!'));
+    });
+};

@@ -1,4 +1,5 @@
-var User = require('../models/user');
+var User = require('../models/user'),
+    handler = require('../jsonJandler');
 
 exports.postUsers = function (req, res) {
     var user = new User({
@@ -7,8 +8,8 @@ exports.postUsers = function (req, res) {
     });
 
     user.save(function (err) {
-        if (err) res.json({message: 'error creating user.', error: err, status: 'ERROR'});
-        res.json({mssage: 'user has been created', status: 'OK'});
+        if (err) res.json(handler.onerror('error creating user.', err));
+        res.json(handler.onok('user has been created'));
     });
 
     console.log(user);
@@ -16,14 +17,14 @@ exports.postUsers = function (req, res) {
 
 exports.getUsers = function (req, res) {
     User.find(function (err, users) {
-        if (err) res.json({message: 'failed to list users!', status: 'ERROR'});
-        res.json({data: users, status: 'OK'});
+        if (err) res.json(handler.onerror('failed to list users!', err));
+        res.json(handler.onreturn(users));
     });
 };
 
 exports.getUser = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
-      if (err) res.json({message: 'failed to find user!', status: 'ERROR'});
-      res.json({data: user, status: 'OK'});
-    })
-}
+      if (err) res.json(handler.onerror('failed to find user!', err));
+      res.json(handler.onreturn(user));
+    });
+};

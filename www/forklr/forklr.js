@@ -1,0 +1,1 @@
+var forklr = angular.module('forklr', []);
