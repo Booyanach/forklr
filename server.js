@@ -20,19 +20,24 @@ app.use(bodyParser.urlencoded({
 app.use(passport.initialize());
 
 app.route('/recipes')
-    .get(recipeController.getRecipes);
+    .get(recipeController.list);
 
 app.route('recipe/:recipe_id')
-    .post(authController.isAuthenticated, recipeController.postRecipe)
-    .get(authController.isAuthenticated, recipeController.getRecipe)
-    .delete(authController.isAuthenticated, recipeController.deleteRecipe);
+    .post(authController.isAuthenticated, recipeController.post)
+    .get(authController.isAuthenticated, recipeController.get)
+    .delete(authController.isAuthenticated, recipeController.delete);
+
+app.route('ingredient/:ingredient_id')
+    .post(authController.isAuthenticated, ingredientController.post)
+    .get(authController.isAuthenticated, ingredientController.get)
+    .delete(authController.isAuthenticated, ingredientController.delete);
 
 app.route('/users')
-    .post(userController.postUsers)
-    .get(userController.getUsers);
+    .get(userController.list);
 
-    app.route('/user/:user_id')
-        .get(userController.getUser);
+app.route('/user/:user_id')
+    .post(userController.post)
+    .get(userController.get);
 
 app.listen(8087);
 

@@ -1,7 +1,7 @@
 var Recipe = require('../models/recipe'),
-    handler = require('../jsonJandler');
+    handler = require('../jsonHandler');
 
-exports.postRecipe = function (req, res) {
+exports.post = function (req, res) {
     var recipe = new Recipe({
         family: req.body.family,
         type: req.body.type,
@@ -17,21 +17,21 @@ exports.postRecipe = function (req, res) {
     });
 };
 
-exports.getRecipe = function (req, res) {
+exports.get = function (req, res) {
     Recipe.findById(req.params.recipe_id, function (err, recipe) {
         if (err) res.json(handler.onerror('failed to find recipe!', err));
         res.json(handler.onreturn(recipe));
     });
 };
 
-exports.getRecipes = function (req, res) {
+exports.list = function (req, res) {
     Recipe.find(function (err, recipes) {
         if (err) res.json(handler.onerror('failed to find recipes!', err));
         res.json(handler.onreturn(recipes));
     });
 };
 
-exports.deleteRecipe = function (req, res) {
+exports.delete = function (req, res) {
     Recipe.findByIdAndRemove(req.params.recipe_id, function (err, recipe) {
         if (err) res.json(handler.onerror('failed to delete recipe!', err));
         res.json(handler.onok('recipe deleted successfuly!'));
